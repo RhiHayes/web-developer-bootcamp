@@ -2,7 +2,7 @@ var heading = document.firstElementChild.lastElementChild.firstElementChild; //S
 
 heading.innerHTML = "Goodbye"; //manipulating it by calling the variable
 
-heading.style.color = "red"; //makes heading red
+// heading.style.color = "red"; //makes heading red
 
 document.querySelector("input").click(); //searches entire document for input, then .click automatically checks it.
 
@@ -71,3 +71,20 @@ document.querySelector("li.item").style.color = "blue"; //styles the li with a c
 
 document.querySelectorAll("#list .item")[1].style.color = "red"; //selects all elements with class of item inside of
 //id of list, [1] grabs the second element and turns it red
+// ------------------------------------------------------------------------------
+
+// document.querySelector("h1").style.fontSize = "100px";
+
+document.querySelector("button").style.backgroundColor = "yellow";
+// ------------------------------------------------------------------------------
+
+document.querySelector("button").classList; //returns btn, which is the class assigned to the button element
+
+document.querySelector("button").classList.add("invisible");
+
+document.querySelector("button").classList.remove("invisible");
+
+document.querySelector("button").classList.toggle("invisible"); //Will apply class if it's not there, will take it off if it is
+
+document.querySelector("h1").classList.add("huge");
+// ------------------------------------------------------------------------------
