@@ -12,47 +12,54 @@ document.querySelectorAll(".drum")[i].addEventListener("click", function() { //A
 console.log(this); //gets the identity of the button that was clicked
   this.style.color = "white"
 
+var buttonInnerHTML = this.innerHTML;
+
+switch (buttonInnerHTML) {
+
+  case "w":
+      var tom1 = new Audio("sounds/tom-1.mp3");
+      tom1.play();
+    break;
+
+  case "a":
+      var tom2 = new Audio("sounds/tom-2.mp3");
+      tom2.play();
+    break;
+
+  case "s":
+      var tom3 = new Audio("sounds/tom-3.mp3");
+      tom3.play();
+    break;
+
+  case "d":
+      var tom4 = new Audio("sounds/tom-4.mp3");
+      tom4.play();
+    break;
+
+  case "j":
+      var snare = new Audio("sounds/snare.mp3");
+      snare.play();
+    break;
+
+  case "k":
+      var crash = new Audio("sounds/crash.mp3");
+      crash.play();
+    break;
+
+  case "l":
+      var kick = new Audio("sounds/kick-bass.mp3");
+      kick.play();
+    break;
+
+  default: console.log(buttonInnerHTML);
+
+}
+
+
   });
 
 }
 
 
-
-
 // var audio = new Audio("sounds/tom-1.mp3");
 // audio.play();
-
-
-
-
-
-
-
-//NOTES FROM LESSON 163-164
-
-//Passing functions as arguments
-
-function add(num1, num2) {
-  return num1 + num2;
-}
-
-function subtract(num1, num2) {
-  return num1 - num2;
-}
-
-function multiply(num1, num2) {
-  return num1 * num2;
-}
-
-function divide(num1, num2) {
-  return num1 / num2;
-}
-
-function calculator(num1, num2, operator) { //operator is the function being passed in
-  return operator(num1, num2);
-}
-
-console.log(calculator(3, 3, add)) //Returns 6
-console.log(calculator(3, 3, subtract)) //Returns 0
-console.log(calculator(3, 3, multiply)) //Returns 9
-console.log(calculator(3, 3, divide)) //Returns 1
