@@ -16,6 +16,7 @@ var buttonInnerHTML = this.innerHTML;
 
 makeSound(buttonInnerHTML); //makes sound for button press
 
+buttonAnimation(buttonInnerHTML);
 
   });
 
@@ -24,6 +25,8 @@ makeSound(buttonInnerHTML); //makes sound for button press
 document.addEventListener("keydown", function(event) {
 
   makeSound(event.key); //makes sound for key press
+
+  buttonAnimation(event.key);
 });
 
 
@@ -71,5 +74,17 @@ function makeSound(key) { //function that takes in key, then plays sound based o
     default: console.log(key);
 
 }
+
+}
+
+function buttonAnimation(currentKey) {
+
+ var activeButton = document.querySelector("." + currentKey);
+
+ activeButton.classList.add("pressed");
+
+ setTimeout(function() {
+   activeButton.classList.remove("pressed");
+ }, 100);
 
 }
