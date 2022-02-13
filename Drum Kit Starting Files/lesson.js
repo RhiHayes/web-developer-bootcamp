@@ -54,3 +54,25 @@ var houseKeeper1 = new HouseKeeper(12, "Jane", ["bathroom", "lobby", "bedroom"])
 
 console.log(houseKeeper1.name);
 // houseKeeper1.clean(); using constructor function on housekeeper variable
+
+
+//NOTES FROM LESSON 171
+
+//Sudo-Code of callbacks and events
+
+// function exampleAddEventListener(typeOfEvent, callback) { //Event listener takes in event like keypress or keydown,
+//   // then function() is the callback
+//
+// var eventThatHappened = { //this is the event the event listener catches and returns back
+//
+//   eventType: keypress,
+//   key: "p",
+//   durationOfKeypress: 2
+//
+// }
+//
+// if (eventThatHappened.eventType === typeOfEvent) { //when specified event is triggered, activate function
+//   callback(eventThatHappened); //calls back the event, logs  object
+// }
+//
+// }

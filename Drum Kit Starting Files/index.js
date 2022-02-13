@@ -9,57 +9,67 @@ for (var i = 0; i < numberOfDrumButtons; i++) { //then we loop through the butto
 //we add an event listener to each button; [i] selects each button individually as the loop increases.
 document.querySelectorAll(".drum")[i].addEventListener("click", function() { //Anonymous function
 
-console.log(this); //gets the identity of the button that was clicked
-  this.style.color = "white"
+// console.log(this); //gets the identity of the button that was clicked
+  // this.style.color = "white"
 
 var buttonInnerHTML = this.innerHTML;
 
-switch (buttonInnerHTML) {
-
-  case "w":
-      var tom1 = new Audio("sounds/tom-1.mp3");
-      tom1.play();
-    break;
-
-  case "a":
-      var tom2 = new Audio("sounds/tom-2.mp3");
-      tom2.play();
-    break;
-
-  case "s":
-      var tom3 = new Audio("sounds/tom-3.mp3");
-      tom3.play();
-    break;
-
-  case "d":
-      var tom4 = new Audio("sounds/tom-4.mp3");
-      tom4.play();
-    break;
-
-  case "j":
-      var snare = new Audio("sounds/snare.mp3");
-      snare.play();
-    break;
-
-  case "k":
-      var crash = new Audio("sounds/crash.mp3");
-      crash.play();
-    break;
-
-  case "l":
-      var kick = new Audio("sounds/kick-bass.mp3");
-      kick.play();
-    break;
-
-  default: console.log(buttonInnerHTML);
-
-}
+makeSound(buttonInnerHTML); //makes sound for button press
 
 
   });
 
 }
 
+document.addEventListener("keydown", function(event) {
 
-// var audio = new Audio("sounds/tom-1.mp3");
-// audio.play();
+  makeSound(event.key); //makes sound for key press
+});
+
+
+
+
+function makeSound(key) { //function that takes in key, then plays sound based on key
+
+  switch (key) {
+
+    case "w":
+        var tom1 = new Audio("sounds/tom-1.mp3");
+        tom1.play();
+      break;
+
+    case "a":
+        var tom2 = new Audio("sounds/tom-2.mp3");
+        tom2.play();
+      break;
+
+    case "s":
+        var tom3 = new Audio("sounds/tom-3.mp3");
+        tom3.play();
+      break;
+
+    case "d":
+        var tom4 = new Audio("sounds/tom-4.mp3");
+        tom4.play();
+      break;
+
+    case "j":
+        var snare = new Audio("sounds/snare.mp3");
+        snare.play();
+      break;
+
+    case "k":
+        var crash = new Audio("sounds/crash.mp3");
+        crash.play();
+      break;
+
+    case "l":
+        var kick = new Audio("sounds/kick-bass.mp3");
+        kick.play();
+      break;
+
+    default: console.log(key);
+
+}
+
+}
