@@ -494,6 +494,19 @@
     padding: 10px;
 }
 
+.hori-img-3 {
+    width: 700px;
+    height: 600px;
+    padding: 10px;
+}
+
+.hori-img-4 {
+    width: 700px;
+    height: 600px;
+    padding-top: 15px;
+    margin-bottom: -100px;
+}
+
 .big-hori-img {
     width: 1000px;
     height: 200px;
@@ -1076,6 +1089,16 @@ body {
     .big-hori-img-4 {
         width: 500px;
         height: 360px;
+    }
+
+    .hori-img-3 {
+        width: 500px;
+        height: 400px;
+    }
+
+    .hori-img-4 {
+        width: 500px;
+        height: 400px;
     }
 
 }
