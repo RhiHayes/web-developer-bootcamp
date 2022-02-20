@@ -696,10 +696,18 @@ body {
 }
 
 /* Defines big View  */
-@media (min-width: 1200px) {
+@media (min-width: 1400px) and (max-width: 1599px) {
 
     .title-image {
-        margin-left: -200px;
+        margin-left: -300px;
+    }
+
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+
+    .title-image {
+        margin-left: -300px;
     }
 
 }
