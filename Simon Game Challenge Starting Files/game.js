@@ -1,4 +1,3 @@
-
 var buttonColors = ["red", "blue", "yellow", "green"]; //simon colors
 
 gamePattern = []; //the actual game pattern is stored here
@@ -18,15 +17,24 @@ userClickedPattern = []; //Resetting user clicked pattern; IMPORTANT!!!
   var randomNum = Math.floor(Math.random() * 4);
   var randomChosenColor = buttonColors[randomNum];
 
-  $("#" + randomChosenColor).fadeOut(100).fadeIn(100); //Adding animation to specified button
-
-  playSound(randomChosenColor);
-  animatePress(randomChosenColor);
-
-  console.log(randomNum);
-  console.log(randomChosenColor);
-
   gamePattern.push(randomChosenColor);
+
+  //NEW ADDITION: This loop allows the game pattern to be repeated
+
+  for (let i = 0; i < gamePattern.length; i++) { //don't use var, it throws an error. use let
+
+
+      setTimeout(function () { //This function plays each sound/animation one at a time
+
+        console.log(gamePattern[i]);
+
+        animatePress(gamePattern[i]);
+        playSound(gamePattern[i]);
+
+      }, (i + 1) * 500); 
+
+
+  }
 
 }
 
