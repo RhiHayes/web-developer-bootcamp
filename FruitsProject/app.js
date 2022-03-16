@@ -1,44 +1,66 @@
-const {MongoClient} = require("mongodb");
+const mongoose = require('mongoose');
 
-// Replace the uri string with your MongoDB deployment's connection string.
-const uri = "mongodb://localhost:27017";
+main().catch(err => console.log(err));
 
-const client = new MongoClient(uri, {useUnifiedTopology: true});
-
-async function run() {
-    try {
-        await client.connect();
-        console.log("Connected Successfully to server");
-
-        // if it does not exist, a new one will be created
-        const database = client.db('fruitsDB');
-        const fruitsCollection = database.collection('fruits');
-
-        // insert 3 fruits documents
-        const fruitDocs = [
-          { "_id": 1, "name": "Apple", score: 8, review: "Great fruit"},
-          { "_id": 2, "name": "Orange", score: 6, review: "Kinda sour"},
-          { "_id": 3, "name": "Banana", score: 9, review: "Great stuff!"}
-         ];
-
-         const insertManyresult = await fruitsCollection.insertMany(fruitDocs);
-         let ids = insertManyresult.insertedIds;
-         console.log(`${insertManyresult.insertedCount} documents were inserted.`);
-
-        const cursor = fruitsCollection.find({});
-
-        if ((await cursor.count()) === 0) {
-            console.log("No documents found!");
-        }
-
-        await cursor.forEach((fruit) => {
-            console.log(fruit);
-        });
-
-    } finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
-    }
+async function main() {
+  await mongoose.connect('mongodb://localhost:27017/fruitsDB');
 }
 
-run().catch(console.dir);
+const fruitSchema = new mongoose.Schema ({
+	name: String,
+	rating: Number,
+	review: String
+})
+
+const Fruit = new mongoose.model ("Fruit", fruitSchema)
+
+const fruit = new Fruit ({
+	name: "Apple",
+	rating: 7,
+	review: "Great!"
+})
+
+// fruit.save()
+
+const personSchema = new mongoose.Schema ({
+	name: String,
+	age: Number
+
+})
+
+const Person = new mongoose.model ("Person", personSchema)
+
+const person = new Person ({
+  name: "John",
+	age: 37
+})
+
+// person.save()
+
+const kiwi = new Fruit ({
+	name: "Kiwi",
+	rating: 10,
+	review: "AMAZING!"
+})
+
+const orange = new Fruit ({
+	name: "Orange",
+	rating: 5,
+	review: "It's ok."
+})
+
+const banana = new Fruit ({
+	name: "Banana",
+	rating: 2,
+	review: "Weird texture."
+})
+
+
+Fruit.insertMany([kiwi, orange, banana], function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("All fruits add to DB!")
+  }
+
+});
