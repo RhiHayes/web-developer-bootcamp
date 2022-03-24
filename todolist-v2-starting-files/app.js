@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const lodash = require("lodash");
 
 const app = express();
 
@@ -82,7 +83,7 @@ if(foundItems.length === 0) {
 app.get("/:customListName", function(req, res) {
 
   //Stores customListName
-  const customListName = req.params.customListName;
+  const customListName = lodash.capitalize(req.params.customListName);
 
 //List.findOne is just looking for one match for a listName.
   List.findOne({name: customListName}, function(err, foundList) {
@@ -112,31 +113,50 @@ app.get("/:customListName", function(req, res) {
 app.post("/", function(req, res){
 
   const itemName = req.body.newItem; //Store itemName
+  const listName = req.body.list;
 
   const item = new Item({
-    name: itemName //Pass it into ite Object
+    name: itemName //Pass it into item Object
   })
 
-  item.save(); //Save it
-
-  res.redirect("/"); //Refresh page
-
+  if (listName == "Today") {
+    item.save(); //Save it
+    res.redirect("/"); //Refresh page
+  } else {
+    //Find a list that matches the user's input
+    List.findOne({name: listName}, function(err, foundList) {
+      //Push the new item into the found list
+      foundList.items.push(item); //Push new item into foundList
+      foundList.save();
+      res.redirect("/" + listName); //Redirect to proper listname
+    })
+  }
 });
 
 app.post("/delete", function(req,res) {
   const checkedItemId = req.body.checkbox; //Grabs id value of checkbox
+  const listName = req.body.listName;
 
-//Removes item based on id
-  Item.findByIdAndRemove(checkedItemId, function(err) {
-    //If no error
-    if (!err) {
-      //Log deleted item and refresh page to update visual data
-      console.log("Deleted item!");
-      res.redirect("/");
-    }
+  if (listName === "Today") {
+    //Removes item based on id
+      Item.findByIdAndRemove(checkedItemId, function(err) {
+        //If no error
+        if (!err) {
+          //Log deleted item and refresh page to update visual data
+          console.log("Deleted item!");
+          res.redirect("/");
+        }
 
-  })
-})
+      });
+  } else {
+    List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItemId}}}, function(err, foundList) {
+      if(!err) {
+        res.redirect("/" + listName);
+      }
+    })
+  }
+
+});
 
 
 app.listen(3000, function() {
