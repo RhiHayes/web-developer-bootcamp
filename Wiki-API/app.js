@@ -64,6 +64,62 @@ app.route("articles")
   })
 });
 
+app.route("/articles/:articleTitle")
+
+//Gets a SPECIFIC article
+.get(function(req, res) {
+
+  Article.findOne({title: req.params.articleTitle}, function(err, foundArticle) {
+    if (foundArticle) {
+      res.send(foundArticle);
+    } else {
+      res.send("No articles matching that title were found.");
+    }
+  });
+
+})
+
+//Updates a SPECIFIC article
+.put(function(req, res) {
+  Article.update(
+    {title: req.params.articleTitle}, //Condition: find article
+    {title: req.body.title, content: req.bosy.content}, //The actual update
+    {overwrite: true},
+    function(err) {
+      if(!err) {
+        res.send("Sucessfully updated article!")
+      }
+    }
+  )
+})
+
+//Updates a SPECIFIC article, BUT can update one field instead of all fields
+.patch(function(req, res){
+  Article.findOneAndUpdate(
+    {title: req.params.articleTitle},
+    {$set: req.body},
+    function(err){
+      if (!err){
+        res.send("The article was updated Successfully")
+      }
+    }
+  )
+
+})
+
+.delete(function(req, res) {
+  Article.deleteOne(
+    {title: req.params.articleTitle}, //Condition: find article
+    function(err) {
+      if (!err) {
+        res.send("successfully deleted article!")
+      } else {
+        res.send(err);
+      }
+    }
+  )
+
+});
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
