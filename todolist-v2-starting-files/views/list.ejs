@@ -4,6 +4,16 @@
     <h1> <%= listTitle %> </h1>
   </div>
 
+  <div class="box" id="heading-2">
+    <h1>Your lists:</h1>
+      <p class="links"><a href="/">Today</a></p>
+    <% listLinks.forEach(function(link) { %>
+  <p class="links"><a href="/<%= link %>"><%=  link %></a></p>
+
+  <% }) %>
+
+  </div>
+
   <div class="box">
 
 <% newListItems.forEach(function(item) { %>
@@ -23,6 +33,10 @@
         <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
         <button type="submit" name="list" value="<%= listTitle %>">+</button>
       </form>
+
   </div>
+
+  <p class="mytext">Create a new list by going to "/" and input your custom list name!</p>
+
 
 <%- include("footer") -%>

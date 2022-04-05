@@ -23,6 +23,12 @@ h1 {
   text-align: center;
 }
 
+#heading-2 {
+  background-color: #A683E3;
+  text-align: center;
+  font-size: 10px;
+}
+
 .item {
   min-height: 70px;
   display: flex;
@@ -92,5 +98,20 @@ input[type="text"]:focus {
 footer {
   color: white;
   color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+a {
+  font-size: 20px;
+}
+
+.links {
+  margin-top: -30px;
+  display: inline-block;
+}
+
+.mytext {
+  margin-top: -30px;
+  margin-bottom: 40px;
   text-align: center;
 }

@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser: true})
+mongoose.connect("mongodb+srv://rhiannon-hayes:todo12345@cluster0.3ehch.mongodb.net/todolistDB", {useNewUrlParser: true})
 
 //Creates Item Model/Layout (aka all items must look like this.)
 const itemsSchema = {
@@ -39,7 +39,7 @@ const item3 = new Item({
 const defaultItems = [item1, item2, item3];
 
 
-//Creating List Model/Layout (aka all listd must look like this.)
+//Creating List Model/Layout (aka all lists must look like this.)
 const listSchema = {
   name: String,
   items: [itemsSchema]
@@ -48,6 +48,34 @@ const listSchema = {
 
 //Creates List Object
 const List = mongoose.model("List", listSchema);
+
+
+
+////----FUNCTIONS SECTION----
+
+//This function removes duplicate names
+function removeDuplicates(arr) {
+let unique = [];
+let trash = []
+
+arr.forEach(element => {
+    if (!unique.includes(element.name)) {
+        unique.push(element.name);
+    }
+
+});
+return unique;
+}
+
+//This function removes whatever value I input
+  function arrayRemove(arr, value) {
+
+         return arr.filter(function(ele){
+             return ele != value;
+         });
+     }
+
+////----FUNCTIONS SECTION END----
 
 
 app.get("/", function(req, res) {
@@ -71,11 +99,26 @@ if(foundItems.length === 0) {
   //After checking for errors, redirect to homepage
   res.redirect("/");
 } else {
-  //If there ARE items, just render list as it is
-    res.render("list", {listTitle: "Today", newListItems: foundItems});
+  //If there ARE items...
+
+//Find all list names
+  List.find({}, function(err, lists) {
+    if (err) {
+      console.log(err);
+    } else {
+    //Clean up
+         let removedDupArr = removeDuplicates(lists);
+         let removedFav = arrayRemove(removedDupArr, "Favicon.ico")
+
+//Then render items + list names
+      res.render("list", {listTitle: "Today", newListItems: foundItems, listLinks: removedFav});
+    }
+    });
+
 }
 
   });
+
 });
 
 
@@ -100,8 +143,21 @@ app.get("/:customListName", function(req, res) {
         list.save();
         res.redirect("/" + customListName);
       } else {
-        //Show the existing list that was found
-        res.render("list", {listTitle: foundList.name, newListItems: foundList.items})
+        //if list DOES exist
+
+        //Find all list names
+        List.find({}, function(err, lists) {
+          if (err) {
+            console.log(err);
+          } else {
+            //clean up
+               let removedDupArr = removeDuplicates(lists);
+               let removedFav = arrayRemove(removedDupArr, "Favicon.ico")
+
+               //Then show the existing list that was found + list names
+               res.render("list", {listTitle: foundList.name, newListItems: foundList.items, listLinks: removedFav})
+          }
+          });
       }
     }
   })
@@ -158,7 +214,6 @@ app.post("/delete", function(req,res) {
 
 });
 
-
-app.listen(3000, function() {
-  console.log("Server started on port 3000");
+app.listen(process.env.PORT || 3000, function() {
+  console.log("Server is running.");
 });
