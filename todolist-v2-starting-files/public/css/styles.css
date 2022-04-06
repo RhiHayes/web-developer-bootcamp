@@ -62,7 +62,7 @@ form.item {
   margin-left: 20px;
 }
 
-button {
+.btn {
   min-height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -70,7 +70,7 @@ button {
   background-color: #A683E3;
   color: #fff;
   font-size: 30px;
-  padding-bottom: 6px;
+  padding-bottom: 1px;
   border-width: 0;
 }
 
@@ -114,4 +114,14 @@ a {
   margin-top: -30px;
   margin-bottom: 40px;
   text-align: center;
+}
+
+.create {
+  background-color: #A683E3;
+  color: #E4E9FD;
+  font-size: 20px;
+  border: none;
+  padding: 5px 10px;
+  margin-left: -20px;
+  border-radius: 25px;
 }

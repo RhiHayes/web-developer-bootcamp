@@ -171,14 +171,19 @@ app.post("/", function(req, res){
   const itemName = req.body.newItem; //Store itemName
   const listName = req.body.list;
 
+  const newListName = lodash.capitalize(req.body.newList);
+
   const item = new Item({
     name: itemName //Pass it into item Object
   })
 
-  if (listName == "Today") {
+  if (listName == "Today") { //First check if list is "Today"
     item.save(); //Save it
     res.redirect("/"); //Refresh page
-  } else {
+  } else if(newListName.length !== 0) { //Then check if new list has been created via the text input
+    res.redirect("/" + newListName);
+  }
+  else {
     //Find a list that matches the user's input
     List.findOne({name: listName}, function(err, foundList) {
       //Push the new item into the found list
